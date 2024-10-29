@@ -71,7 +71,7 @@ Output:
 | 96          | 1              |
 +-------------+----------------+
 
-sol : select customer_id, count(*) As Count_no_trans from visits 
-    		left join Transactions on visits.visit_id=transactions.visit_id
-        		where transactions.amount is NULL
-           		 	Group BY 1;
+sol : SELECT customer_id, COUNT(*) AS count_no_trans
+    FROM Visits
+        WHERE visit_id NOT IN (SELECT visit_id FROM Transactions)
+            GROUP BY customer_id; 
